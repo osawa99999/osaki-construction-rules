@@ -12,96 +12,242 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Segoe UI', Roboto, sans-serif;
             background: linear-gradient(135deg, #e8f5e8 0%, #d4edda 100%);
             min-height: 100vh;
             color: #2c3e50;
         }
 
-        .container {
-            max-width: 500px;
-            margin: 0 auto;
-            padding: 20px;
-            min-height: 100vh;
-        }
-
         /* トップ画面 */
         .top-screen {
             display: block;
+            min-height: 100vh;
         }
 
         .top-screen.hidden {
             display: none;
         }
 
-        .title {
-            text-align: center;
-            margin-bottom: 30px;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .title h1 {
-            font-size: 24px;
-            font-weight: bold;
-            color: #2c5530;
-            line-height: 1.4;
-        }
-
-        .button-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
         .menu-button {
-            width: 100%;
-            padding: 16px 20px;
             border: none;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 600;
-            text-align: center;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-            position: relative;
-            overflow: hidden;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        .menu-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+        /* =========================================================
+           PC・タブレット表示（768px以上）：4列×3行 グリッドレイアウト
+           ========================================================= */
+        @media (min-width: 768px) {
+            .top-screen {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: clamp(24px, 3.5vw, 48px);
+            }
+
+            .top-screen.hidden {
+                display: none;
+            }
+
+            .container {
+                width: 100%;
+                max-width: 1200px;
+                margin: 0 auto;
+            }
+
+            .grid-layout {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                grid-template-rows: repeat(3, minmax(165px, 1fr));
+                gap: clamp(16px, 2vw, 26px);
+            }
+
+            /* 左上タイトル枠 */
+            .title-card {
+                background: #ffffff;
+                border: 2.5px solid #1e4620;
+                border-radius: 8px;
+                padding: clamp(16px, 2vw, 24px);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            }
+
+            .header-logo {
+                max-width: 110px;
+                max-height: 44px;
+                width: auto;
+                height: auto;
+                object-fit: contain;
+                margin-bottom: 10px;
+            }
+
+            .title-card h1 {
+                font-size: clamp(16px, 1.65vw, 22px);
+                font-weight: 700;
+                color: #1c2833;
+                line-height: 1.45;
+                letter-spacing: 0.03em;
+            }
+
+            /* 緑タイルボタン（01〜11共通） */
+            .menu-button {
+                background: linear-gradient(160deg, #3a7d1e 0%, #2b6114 100%);
+                color: #ffffff;
+                border: 2px solid #193b0b;
+                border-radius: 16px;
+                padding: clamp(14px, 1.8vw, 22px) 12px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                box-shadow: 0 4px 12px rgba(25, 59, 11, 0.18);
+            }
+
+            .menu-button:hover {
+                background: linear-gradient(160deg, #459124 0%, #347319 100%);
+                transform: translateY(-3px);
+                box-shadow: 0 8px 20px rgba(25, 59, 11, 0.28);
+            }
+
+            .menu-button:active {
+                transform: translateY(0);
+                box-shadow: 0 3px 8px rgba(25, 59, 11, 0.2);
+            }
+
+            .btn-num {
+                display: block;
+                font-size: clamp(36px, 4.2vw, 56px);
+                font-weight: 800;
+                line-height: 1.05;
+                letter-spacing: 0.02em;
+                margin-bottom: clamp(8px, 1vw, 14px);
+                text-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+            }
+
+            .btn-text {
+                display: block;
+                font-size: clamp(13px, 1.35vw, 18px);
+                font-weight: 600;
+                line-height: 1.35;
+                word-break: keep-all;
+            }
         }
 
-        .menu-button:active {
-            transform: translateY(0);
+        /* =========================================================
+           スマホ表示（767px以下）：従来の縦1列リストレイアウト
+           ========================================================= */
+        @media (max-width: 767px) {
+            .container {
+                max-width: 500px;
+                margin: 0 auto;
+                padding: 20px;
+                min-height: 100vh;
+            }
+
+            .grid-layout {
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .title-card {
+                text-align: center;
+                margin-bottom: 18px;
+                padding: 20px;
+                background: rgba(255, 255, 255, 0.92);
+                border-radius: 15px;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .header-logo {
+                max-height: 38px;
+                width: auto;
+                margin-bottom: 8px;
+            }
+
+            .title-card h1 {
+                font-size: 24px;
+                font-weight: bold;
+                color: #2c5530;
+                line-height: 1.4;
+            }
+
+            .menu-button {
+                width: 100%;
+                padding: 16px 20px;
+                border-radius: 12px;
+                font-size: 16px;
+                font-weight: 600;
+                text-align: center;
+                box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .menu-button:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            }
+
+            .menu-button:active {
+                transform: translateY(0);
+            }
+
+            /* 従来表記（01_作業名）の再現 */
+            .btn-num::after {
+                content: "_";
+            }
+
+            .btn-text br {
+                display: none;
+            }
+
+            .paren::before {
+                content: "（";
+            }
+
+            .paren::after {
+                content: "）";
+            }
+
+            /* 濃い青ボタン（01-04） */
+            .menu-button.primary {
+                background: linear-gradient(135deg, #2c5aa0 0%, #1e4080 100%);
+                color: white;
+            }
+
+            .menu-button.primary:hover {
+                background: linear-gradient(135deg, #3a6bb0 0%, #2e5090 100%);
+            }
+
+            /* 薄い青ボタン（05-11） */
+            .menu-button.secondary {
+                background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+                color: #1565c0;
+                border: 2px solid #90caf9;
+            }
+
+            .menu-button.secondary:hover {
+                background: linear-gradient(135deg, #f3f8fd 0%, #d1e7fb 100%);
+            }
         }
 
-        /* 濃い青ボタン（01-04） */
-        .menu-button.primary {
-            background: linear-gradient(135deg, #2c5aa0 0%, #1e4080 100%);
-            color: white;
-        }
-
-        .menu-button.primary:hover {
-            background: linear-gradient(135deg, #3a6bb0 0%, #2e5090 100%);
-        }
-
-        /* 薄い青ボタン（05-11） */
-        .menu-button.secondary {
-            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
-            color: #1565c0;
-            border: 2px solid #90caf9;
-        }
-
-        .menu-button.secondary:hover {
-            background: linear-gradient(135deg, #f3f8fd 0%, #d1e7fb 100%);
-        }
-
-        /* 動画画面 */
+        /* =========================================================
+           動画再生モーダル画面
+           ========================================================= */
         .video-screen {
             display: none;
             position: fixed;
@@ -136,7 +282,6 @@
             height: auto;
         }
 
-        /* 縦向き時の動画サイズ調整 */
         @media (orientation: portrait) {
             .video-player {
                 width: 100%;
@@ -144,7 +289,6 @@
             }
         }
 
-        /* 横向き時の動画サイズ調整 */
         @media (orientation: landscape) {
             .video-player {
                 height: 100vh;
@@ -177,7 +321,6 @@
             transform: scale(1.1);
         }
 
-        /* 横向き時の戻るボタン位置調整 */
         @media (orientation: landscape) {
             .back-button {
                 top: 10px;
@@ -187,61 +330,64 @@
                 font-size: 18px;
             }
         }
-
-        /* ロゴ */
-        .logo {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 80px;
-            height: auto;
-            z-index: 999;
-            opacity: 0.8;
-            transition: opacity 0.3s ease;
-        }
-
-        .logo:hover {
-            opacity: 1;
-        }
-
-        /* スマホ横向き時のロゴサイズ調整 */
-        @media (orientation: landscape) {
-            .logo {
-                width: 60px;
-                bottom: 15px;
-                right: 15px;
-            }
-        }
-
-        .loading {
-            color: white;
-            font-size: 18px;
-            text-align: center;
-        }
-
-
     </style>
 </head>
 <body>
     <!-- トップ画面 -->
     <div class="top-screen" id="topScreen">
         <div class="container">
-            <div class="title">
-                <h1>大崎建設<br>スタンダードルール</h1>
-            </div>
-            
-            <div class="button-list">
-                <button class="menu-button primary" data-video="001_ark.mp4">01_アーク溶接</button>
-                <button class="menu-button primary" data-video="002_kaik.mp4">02_開口部周り</button>
-                <button class="menu-button primary" data-video="003_con.mp4">03_コンクリート打設</button>
-                <button class="menu-button primary" data-video="004_syar.mp4">04_車両系建設機械混在作業</button>
-                <button class="menu-button secondary" data-video="005_tam.mp4">05_玉掛け（長尺物）</button>
-                <button class="menu-button secondary" data-video="006_renf.mp4">06_玉掛け（レンフロークランプ）</button>
-                <button class="menu-button secondary" data-video="007_maru.mp4">07_台のこ（携帯用丸のこ等）</button>
-                <button class="menu-button secondary" data-video="008_sind.mp4">08_打撃型振動工具</button>
-                <button class="menu-button secondary" data-video="009_kure.mp4">09_小型移動式クレーン</button>
-                <button class="menu-button secondary" data-video="010_back.mp4">10_バックホウアタッチメント交換</button>
-                <button class="menu-button secondary" data-video="011_kuiu.mp4">11_ハンド型油圧杭打機</button>
+            <div class="grid-layout">
+                <!-- 左上アプリ名称＆ロゴ枠 -->
+                <div class="title-card">
+                    <img src="data/OSARogo.png" alt="OSA Logo" class="header-logo">
+                    <h1>大崎建設<br>スタンダードルール</h1>
+                </div>
+
+                <!-- 01〜11 メニュータイル -->
+                <button class="menu-button primary" data-video="001_ark.mp4">
+                    <span class="btn-num">01</span>
+                    <span class="btn-text">アーク溶接</span>
+                </button>
+                <button class="menu-button primary" data-video="002_kaik.mp4">
+                    <span class="btn-num">02</span>
+                    <span class="btn-text">開口部周り</span>
+                </button>
+                <button class="menu-button primary" data-video="003_con.mp4">
+                    <span class="btn-num">03</span>
+                    <span class="btn-text">コンクリート<br>打設</span>
+                </button>
+                <button class="menu-button primary" data-video="004_syar.mp4">
+                    <span class="btn-num">04</span>
+                    <span class="btn-text">車両系建設機械<br>混在作業</span>
+                </button>
+                <button class="menu-button secondary" data-video="005_tam.mp4">
+                    <span class="btn-num">05</span>
+                    <span class="btn-text">玉掛け<br><span class="paren">長尺物</span></span>
+                </button>
+                <button class="menu-button secondary" data-video="006_renf.mp4">
+                    <span class="btn-num">06</span>
+                    <span class="btn-text">玉掛け<br><span class="paren">レンフロークランプ</span></span>
+                </button>
+                <button class="menu-button secondary" data-video="007_maru.mp4">
+                    <span class="btn-num">07</span>
+                    <span class="btn-text">台のこ<br><span class="paren">携帯用丸のこ等</span></span>
+                </button>
+                <button class="menu-button secondary" data-video="008_sind.mp4">
+                    <span class="btn-num">08</span>
+                    <span class="btn-text">打撃型<br>振動工具</span>
+                </button>
+                <button class="menu-button secondary" data-video="009_kure.mp4">
+                    <span class="btn-num">09</span>
+                    <span class="btn-text">小型移動式<br>クレーン</span>
+                </button>
+                <button class="menu-button secondary" data-video="010_back.mp4">
+                    <span class="btn-num">10</span>
+                    <span class="btn-text">バックホウ<br>アタッチメント交換</span>
+                </button>
+                <button class="menu-button secondary" data-video="011_kuiu.mp4">
+                    <span class="btn-num">11</span>
+                    <span class="btn-text">ハンド型<br>油圧杭打機</span>
+                </button>
             </div>
         </div>
     </div>
@@ -257,10 +403,10 @@
         </div>
     </div>
 
-    <!-- ロゴ -->
-    <img src="OSARogo.png" alt="OSA Logo" class="logo">
-
     <script>
+        // メディア格納フォルダのパス
+        const DATA_DIR = 'data/';
+
         // 要素の取得
         const topScreen = document.getElementById('topScreen');
         const videoScreen = document.getElementById('videoScreen');
@@ -290,17 +436,13 @@
 
         // 動画表示関数
         function showVideo(videoFile) {
-            // 動画のソースを設定
-            videoPlayer.src = videoFile;
-            
-            // 画面を切り替え
+            videoPlayer.src = DATA_DIR + videoFile;
             topScreen.classList.add('hidden');
             videoScreen.classList.add('active');
-            
-            // 動画を読み込み開始
+            document.body.style.overflow = 'hidden';
+
             videoPlayer.load();
-            
-            // 少し遅延させてから再生開始（読み込み完了を待つ）
+
             setTimeout(() => {
                 videoPlayer.play().catch(e => {
                     console.log('自動再生がブロックされました:', e);
@@ -310,22 +452,19 @@
 
         // 動画非表示関数
         function hideVideo() {
-            // 動画を停止
             videoPlayer.pause();
             videoPlayer.currentTime = 0;
             videoPlayer.src = '';
-            
-            // 画面を切り替え
+
             videoScreen.classList.remove('active');
             topScreen.classList.remove('hidden');
+            document.body.style.overflow = '';
         }
 
         // 画面回転時の処理
         window.addEventListener('orientationchange', () => {
-            // 回転後に動画サイズを再調整
             setTimeout(() => {
                 if (videoScreen.classList.contains('active')) {
-                    // 動画の表示を一旦リセットして再描画
                     videoPlayer.style.display = 'none';
                     setTimeout(() => {
                         videoPlayer.style.display = 'block';
@@ -336,13 +475,11 @@
 
         // タッチイベントの最適化（スマホ用）
         document.addEventListener('touchstart', function(){}, {passive: true});
-        
+
         // 動画の読み込み完了時の処理
         videoPlayer.addEventListener('loadeddata', () => {
             console.log('動画の読み込みが完了しました');
         });
-
-
     </script>
 </body>
 </html>
